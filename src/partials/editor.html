@@ -1,0 +1,47 @@
+<div class="section gf-form-group">
+  <h5>Chart Properties</h5>
+  <div class="gf-form">
+    <span class="gf-form-label width-auto">Category Column</span>
+    <div class="gf-form-select-wrapper width-auto">
+      <select class="gf-form-input" ng-model="ctrl.panel.categoryColumnName" ng-options="ct for ct in ctrl.data.columnTexts" ng-change="ctrl.render()"></select>
+    </div>
+  </div>
+  <div class="gf-form">
+    <span class="gf-form-label width-auto">Measure Column</span>
+    <div class="gf-form-select-wrapper width-auto">
+      <select class="gf-form-input" ng-model="ctrl.panel.measureColumnName" ng-options="ct for ct in ctrl.data.columnTexts" ng-change="ctrl.render()"></select>
+    </div>
+  </div>
+  <div class="gf-form">
+    <span class="gf-form-label width-auto">Keep to Side</span>
+    <div class="gf-form-select-wrapper width-auto">
+      <select class="gf-form-input" ng-model="ctrl.panel.keep" ng-options="ct for ct in ['auto', 'left', 'right']" ng-change="ctrl.render()"></select>
+    </div>
+  </div>
+  <div class="gf-form">
+    <span class="gf-form-label width-auto">Gap (in pixels)</span>
+    <div class="gf-form-select-wrapper width-auto">
+      <input type="text" class="gf-form-input max-width-10" ng-model="ctrl.panel.gap" ng-change="ctrl.render()">
+    </div>
+  </div>
+</div>
+<div class="section gf-form-group">
+  <h5>Legend</h5>
+  <div class="gf-form">
+    <gf-form-switch class="gf-form" label="Is Showing" label-class="width-auto" checked="ctrl.panel.legend.isShowing" on-change="ctrl.render()"></gf-form-switch>
+  </div>
+  <div ng-if="ctrl.panel.legend.isShowing">
+    <div class="gf-form">
+      <gf-form-switch class="gf-form" label="Is Full Width" label-class="width-auto" checked="ctrl.panel.legend.isFullWidth" on-change="ctrl.render()"></gf-form-switch>
+    </div>
+    <div class="gf-form">
+      <gf-form-switch class="gf-form" label="Reverse" label-class="width-auto" checked="ctrl.panel.legend.isReverse" on-change="ctrl.render()"></gf-form-switch>
+    </div>
+    <div class="gf-form">
+      <span class="gf-form-label width-auto">Position</span>
+      <div class="gf-form-select-wrapper width-auto">
+        <select class="gf-form-input" ng-model="ctrl.panel.legend.position" ng-options="t for t in ['top', 'left', 'right', 'bottom']" ng-change="ctrl.render()"></select>
+      </div>
+    </div>
+  </div>
+</div>

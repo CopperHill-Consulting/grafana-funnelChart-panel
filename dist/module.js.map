@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/module.js"],"names":[],"mappings":";;;;;;;;;;;;AAAA","sourcesContent":["import {FunnelChartJsPanelCtrl} from './ctrl';\n\nexport {\n    FunnelChartJsPanelCtrl as PanelCtrl\n};\n"],"file":"module.js"}
