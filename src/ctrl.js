@@ -3,12 +3,16 @@ import _ from 'lodash';
 import rendering from './rendering';
 
 const panelDefaults = {
+  seriesColumnIndex: -1,
+  measureColumnIndex: -1,
   seriesColumnName: null,
   measureColumnName: null,
-  seriesColors: ['#299c46'],
-  seriesHoverColors: ['#299c46'],
+  seriesColorSuperset: ['#299c46', '#5794F2', '#F2495C', '#FADE2A', '#FF9830', '#B877D9'],
+  seriesColors: [],
+  //seriesHoverColors: [],
   keep: 'auto',
   gap: 2,
+  sort: 'desc',
   legend: {
     isShowing: true,
     position: 'top',
@@ -32,18 +36,14 @@ export class FunnelChartJsPanelCtrl extends MetricsPanelCtrl {
     this.events.on('data-received', this.onDataReceived.bind(this));
     this.events.on('data-snapshot-load', this.onDataReceived.bind(this));
     this.events.on('data-error', this.onDataError.bind(this));
-
-    console.log(this);
   }
 
   onRender() {
-
   }
 
   onInitEditMode() {
     let path = 'public/plugins/chc-funnel-panel/partials/';
     this.addEditorTab('Options', `${path}editor.html`, 2);
-    this.addEditorTab('Colors', `${path}series-colors.html`, 3);
   }
 
   onDataError() {
@@ -75,6 +75,8 @@ export class FunnelChartJsPanelCtrl extends MetricsPanelCtrl {
       };
     }
 
+    this.panel.seriesColors = _.slice(this.panel.seriesColorSuperset, 0, this.data.rows.length);
+
     this.render();
   }
 
@@ -84,12 +86,33 @@ export class FunnelChartJsPanelCtrl extends MetricsPanelCtrl {
 
   onColorChange(panelColorIndex, type) {
     return color => {
-      if (type == 'hover')
-        this.panel.seriesHoverColors[panelColorIndex] = color;
-      else
+      //if (type == 'hover')
+      //  this.panel.seriesHoverColors[panelColorIndex] = color;
+      //else
         this.panel.seriesColors[panelColorIndex] = color;
       this.render();
     };
+  }
+
+  onColumnChange(type) {
+
+    _.each(this.data.columns, (obj, index) => {
+      var colName = this.panel.measureColumnName;
+      if (type == 'series') {
+        colName = this.panel.seriesColumnName;
+      }
+
+      if (obj.text.toLowerCase() == colName){
+        if (type == 'series') {
+          this.panel.seriesColumnIndex = index;
+        }else if (type == 'measure'){
+          this.panel.measureColumnIndex = index;
+        }
+      }
+
+      if (index == this.data.columns.length - 1)
+        this.render();
+    });
   }
 }
 

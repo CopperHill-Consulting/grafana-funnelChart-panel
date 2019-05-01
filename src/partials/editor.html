@@ -1,23 +1,31 @@
 <div class="section gf-form-group">
   <h5>Chart Properties</h5>
   <div class="gf-form">
-    <span class="gf-form-label width-auto">Category Column</span>
+    <span class="gf-form-label width-auto">Series Column</span>
     <div class="gf-form-select-wrapper width-auto">
-      <select class="gf-form-input" ng-model="ctrl.panel.categoryColumnName" ng-options="ct for ct in ctrl.data.columnTexts" ng-change="ctrl.render()"></select>
+      <select class="gf-form-input" ng-model="ctrl.panel.seriesColumnName" ng-options="ct for ct in ctrl.data.columnTexts" ng-change="ctrl.onColumnChange('series')"></select>
     </div>
   </div>
   <div class="gf-form">
     <span class="gf-form-label width-auto">Measure Column</span>
     <div class="gf-form-select-wrapper width-auto">
-      <select class="gf-form-input" ng-model="ctrl.panel.measureColumnName" ng-options="ct for ct in ctrl.data.columnTexts" ng-change="ctrl.render()"></select>
+      <select class="gf-form-input" ng-model="ctrl.panel.measureColumnName" ng-options="ct for ct in ctrl.data.columnTexts" ng-change="ctrl.onColumnChange('measure')"></select>
     </div>
   </div>
+  <div class="gf-form">
+    <span class="gf-form-label width-auto">Sort</span>
+    <div class="gf-form-select-wrapper width-auto">
+      <select class="gf-form-input" ng-model="ctrl.panel.sort" ng-options="s for s in ['asc', 'desc']" ng-change="ctrl.render()"></select>
+    </div>
+  </div>
+  <!--
   <div class="gf-form">
     <span class="gf-form-label width-auto">Keep to Side</span>
     <div class="gf-form-select-wrapper width-auto">
       <select class="gf-form-input" ng-model="ctrl.panel.keep" ng-options="ct for ct in ['auto', 'left', 'right']" ng-change="ctrl.render()"></select>
     </div>
   </div>
+  -->
   <div class="gf-form">
     <span class="gf-form-label width-auto">Gap (in pixels)</span>
     <div class="gf-form-select-wrapper width-auto">
@@ -44,4 +52,21 @@
       </div>
     </div>
   </div>
+</div>
+<div class="section gf-form-group">
+  <h5>Series Colors</h5>
+  <div class="gf-form">
+    <label class="gf-form-label width-8">Start Colors</label>
+    <span class="gf-form-label" ng-repeat="color in ctrl.panel.seriesColors track by $index">
+      <color-picker color="color" onChange="ctrl.onColorChange($index, 'start')"></color-picker>
+    </span>
+  </div>
+  <!--
+  <div class="gf-form">
+    <label class="gf-form-label width-8">Hover Colors</label>
+    <span class="gf-form-label" ng-repeat="color in ctrl.panel.seriesHoverColors track by $index">
+      <color-picker color="color" onChange="ctrl.onColorChange($index, 'hover')"></color-picker>
+    </span>
+  </div>
+  -->
 </div>

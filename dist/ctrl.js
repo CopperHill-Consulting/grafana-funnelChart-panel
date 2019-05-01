@@ -32,12 +32,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 var panelDefaults = {
+  seriesColumnIndex: -1,
+  measureColumnIndex: -1,
   seriesColumnName: null,
   measureColumnName: null,
-  seriesColors: ['#299c46'],
-  seriesHoverColors: ['#299c46'],
+  seriesColorSuperset: ['#299c46', '#5794F2', '#F2495C', '#FADE2A', '#FF9830', '#B877D9'],
+  seriesColors: [],
+  //seriesHoverColors: [],
   keep: 'auto',
   gap: 2,
+  sort: 'desc',
   legend: {
     isShowing: true,
     position: 'top',
@@ -74,7 +78,6 @@ function (_MetricsPanelCtrl) {
 
     _this.events.on('data-error', _this.onDataError.bind(_assertThisInitialized(_this)));
 
-    console.log(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -86,7 +89,6 @@ function (_MetricsPanelCtrl) {
     value: function onInitEditMode() {
       var path = 'public/plugins/chc-funnel-panel/partials/';
       this.addEditorTab('Options', "".concat(path, "editor.html"), 2);
-      this.addEditorTab('Colors', "".concat(path, "series-colors.html"), 3);
     }
   }, {
     key: "onDataError",
@@ -120,7 +122,7 @@ function (_MetricsPanelCtrl) {
         };
       }
 
-      console.log(this.data);
+      this.panel.seriesColors = _lodash["default"].slice(this.panel.seriesColorSuperset, 0, this.data.rows.length);
       this.render();
     }
   }, {
@@ -134,10 +136,36 @@ function (_MetricsPanelCtrl) {
       var _this2 = this;
 
       return function (color) {
-        if (type == 'hover') _this2.panel.seriesHoverColors[panelColorIndex] = color;else _this2.panel.seriesColors[panelColorIndex] = color;
+        //if (type == 'hover')
+        //  this.panel.seriesHoverColors[panelColorIndex] = color;
+        //else
+        _this2.panel.seriesColors[panelColorIndex] = color;
 
         _this2.render();
       };
+    }
+  }, {
+    key: "onColumnChange",
+    value: function onColumnChange(type) {
+      var _this3 = this;
+
+      _lodash["default"].each(this.data.columns, function (obj, index) {
+        var colName = _this3.panel.measureColumnName;
+
+        if (type == 'series') {
+          colName = _this3.panel.seriesColumnName;
+        }
+
+        if (obj.text.toLowerCase() == colName) {
+          if (type == 'series') {
+            _this3.panel.seriesColumnIndex = index;
+          } else if (type == 'measure') {
+            _this3.panel.measureColumnIndex = index;
+          }
+        }
+
+        if (index == _this3.data.columns.length - 1) _this3.render();
+      });
     }
   }]);
 
