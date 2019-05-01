@@ -25,6 +25,14 @@ function link(scope, elem, attrs, ctrl) {
     elem.html(html);
   }
 
+  function getLegendHeight() {
+    if (ctrl.panel.legend.isShowing && (ctrl.panel.legend.position == 'top' || ctrl.panel.legend.position == 'bottom')) {
+      return 30;
+    }
+
+    return 40;
+  }
+
   function getLegendWidth() {
     if (ctrl.panel.legend.isShowing && (ctrl.panel.legend.position == 'left' || ctrl.panel.legend.position == 'right')) {
       return 40;
@@ -35,7 +43,7 @@ function link(scope, elem, attrs, ctrl) {
 
   function addChart() {
     var width = elem.width() - getLegendWidth();
-    var height = ctrl.height - 20;
+    var height = ctrl.height - getLegendHeight();
     var options = {
       type: 'funnel',
       data: {
@@ -64,8 +72,9 @@ function link(scope, elem, attrs, ctrl) {
       }
     };
     elem.html('');
-    var canvas = jQuery('<canvas>').appendTo(elem),
-        ctx = canvas[0].getContext('2d');
+    var canvas = jQuery('<canvas>').appendTo(elem);
+    canvas[0].style.marginTop = '10px';
+    var ctx = canvas[0].getContext('2d');
     ctx.canvas.height = height;
     ctx.canvas.width = width;
     var chart = new FunnelChart(ctx, options);
