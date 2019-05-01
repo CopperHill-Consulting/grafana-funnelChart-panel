@@ -7,7 +7,7 @@
     "description": "Use Chart.js to add custom charts to Grafana.",
     "author": {
       "name": "CopperHill Consulting",
-      "url": "https://github.com/westc/grafana-chartjs-panel.git"
+      "url": "https://github.com/CopperHill-Consulting/grafana-funnelChart-panel.git"
     },
     "keywords": ["panel"],
     "logos": {
@@ -15,10 +15,10 @@
       "large": "img/funnelBarChart_logo_large.png"
     },
     "links": [
-      {"name": "Project site", "url": "https://github.com/westc/grafana-chartjs-panel.git"}
+      {"name": "Project site", "url": "https://github.com/CopperHill-Consulting/grafana-funnelChart-panel.git"}
     ],
-    "version": "0.0.1",
-    "updated": "2019-03-27"
+    "version": "0.1.0",
+    "updated": "2019-05-01"
   },
 
   "dependencies": {
